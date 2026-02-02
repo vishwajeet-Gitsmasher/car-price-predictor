@@ -1,0 +1,130 @@
+/* ===== Reset ===== */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* ===== Body ===== */
+body{
+    background: linear-gradient(135deg,#1f2933,#111827);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#fff;
+}
+
+/* ===== Container ===== */
+.container{
+    width:100%;
+    max-width:700px;
+    padding:20px;
+}
+
+/* ===== Card ===== */
+.card{
+    background:#ffffff;
+    color:#222;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 15px 40px rgba(0,0,0,0.5);
+}
+
+/* ===== Header ===== */
+.card-header{
+    background: linear-gradient(90deg,#2563eb,#06b6d4);
+    padding:20px;
+    text-align:center;
+}
+
+.card-header h1{
+    color:white;
+    font-size:28px;
+    letter-spacing:1px;
+}
+
+/* ===== Body ===== */
+.card-body{
+    padding:30px;
+}
+
+/* ===== Subtitle ===== */
+.card-body h5{
+    text-align:center;
+    color:#555;
+    margin-bottom:30px;
+}
+
+/* ===== Form Groups ===== */
+.form-group{
+    margin-bottom:18px;
+    text-align:center;
+}
+
+/* ===== Labels ===== */
+label{
+    font-weight:600;
+    margin-bottom:6px;
+    display:block;
+    color:#111;
+}
+
+/* ===== Inputs & Select ===== */
+input,
+select{
+    width:100%;
+    max-width:420px;
+    padding:12px 14px;
+    border-radius:10px;
+    border:1.8px solid #cbd5e1;
+    font-size:15px;
+    transition:0.3s;
+    background:#f9fafb;
+}
+
+/* ===== Focus ===== */
+input:focus,
+select:focus{
+    outline:none;
+    border-color:#2563eb;
+    box-shadow:0 0 0 3px rgba(37,99,235,0.2);
+    background:#fff;
+}
+
+/* ===== Button ===== */
+button{
+    width:100%;
+    max-width:420px;
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(90deg,#2563eb,#06b6d4);
+    color:white;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+/* ===== Button Hover ===== */
+button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(37,99,235,0.4);
+}
+
+/* ===== Prediction ===== */
+#prediction{
+    margin-top:20px;
+    font-size:20px;
+    font-weight:700;
+    color:#16a34a;
+}
+
+/* ===== Responsive ===== */
+@media(max-width:600px){
+    .card-body{
+        padding:20px;
+    }
+}

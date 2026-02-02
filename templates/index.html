@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Car Price Predictor</title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="static/css/style.css">
+
+    <!-- jQuery (needed for your JS) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <!-- Header -->
+        <div class="card-header">
+            <h1>Welcome to Car Price Predictor</h1>
+        </div>
+
+        <!-- Body -->
+        <div class="card-body">
+
+            <h5>
+                This app predicts the price of a car you want to sell.
+                Try filling the details below:
+            </h5>
+
+            <form method="post" accept-charset="utf-8" name="Modelform">
+
+                <!-- Company -->
+                <div class="form-group">
+                    <label>Select the company:</label>
+                    <select id="company" name="company" required
+                            onchange="load_car_models(this.id,'car_models')">
+                        {% for company in companies %}
+                        <option value="{{ company }}">{{ company }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Model -->
+                <div class="form-group">
+                    <label>Select the model:</label>
+                    <select id="car_models" name="car_models" required></select>
+                </div>
+
+                <!-- Year -->
+                <div class="form-group">
+                    <label>Select Year of Purchase:</label>
+                    <select id="year" name="year" required>
+                        {% for year in years %}
+                        <option value="{{ year }}">{{ year }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Fuel -->
+                <div class="form-group">
+                    <label>Select the Fuel Type:</label>
+                    <select id="fuel_type" name="fuel_type" required>
+                        {% for fuel in fuel_types %}
+                        <option value="{{ fuel }}">{{ fuel }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- KM Driven -->
+                <div class="form-group">
+                    <label>Enter the Number of Kilometres Driven:</label>
+                    <input type="text" id="kilo_driven" name="kilo_driven"
+                           placeholder="Enter kilometres driven">
+                </div>
+
+                <!-- Button -->
+                <div class="form-group">
+                    <button type="submit" onclick="send_data()">Predict Price</button>
+                </div>
+
+            </form>
+
+            <!-- Prediction -->
+            <div style="text-align:center;">
+                <span id="prediction"></span>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- JS Logic (unchanged) -->
+<script>
+
+function load_car_models(company_id, car_model_id)
+{
+    var company = document.getElementById(company_id);
+    var car_model = document.getElementById(car_model_id);
+
+    car_model.innerHTML = "";
+
+    {% for company in companies %}
+        if(company.value == "{{ company }}")
+        {
+            {% for model in car_models %}
+                {% if company in model %}
+                    var newOption = document.createElement("option");
+                    newOption.value = "{{ model }}";
+                    newOption.innerHTML = "{{ model }}";
+                    car_model.options.add(newOption);
+                {% endif %}
+            {% endfor %}
+        }
+    {% endfor %}
+}
+
+function form_handler(event){
+    event.preventDefault();
+}
+
+function send_data(){
+
+    document.querySelector('form').addEventListener("submit", form_handler);
+
+    var fd = new FormData(document.querySelector('form'));
+
+    var xhr = new XMLHttpRequest();
+
+    xhr.open('POST','/predict',true);
+
+    document.getElementById('prediction').innerHTML = "Predicting price...";
+
+    xhr.onreadystatechange = function(){
+        if(xhr.readyState == XMLHttpRequest.DONE){
+
+            let price = parseFloat(xhr.responseText);
+
+            if(price < 0){
+                document.getElementById('prediction').innerHTML =
+                  "This car is too old or not in sellable condition based on the data provided.";
+                return;
+            }
+
+            document.getElementById('prediction').innerHTML =
+                "Estimated Price: ₹ " + price.toFixed(2);
+        }
+    };
+
+
+    xhr.send(fd);
+}
+
+</script>
+
+</body>
+</html>
